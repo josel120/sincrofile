@@ -1,5 +1,7 @@
 var fs   = require("fs");
 var path = require("path");
+var ncp = require('ncp').ncp;
+ncp.limit = 16;
 
 
 var configFile = "example.json";
@@ -92,28 +94,93 @@ function watchFile(source, dest) {
     });
 }
 
+function filesCopy(filesTodo, urlTodoSource, urlTodoDestination){
+            
+    //let pedazos = filesTodo.split('.');
+    let fileSi = filesTodo[0];
+    let filesNo = filesTodo[1];
+    
+    filesNo.forEach(element => {
+        let pedazos = element.split('.');  
+        if(pedazos[1]){
+            fs.createReadStream(config.source+'\\'+element).pipe(fs.createWriteStream(config.destination+'\\'+element));
+            //console.log('archivo normal');
+        }
+        else{
+            //console.log('carpeta');
+            
+            urlTodoSource = urlTodoSource+'\\'+pedazos[0];
+            urlTodoDestination = urlTodoDestination+'\\'+pedazos[0];
+            console.log('urlTodoSource', urlTodoSource);
+            console.log('urlTodoDestination', urlTodoDestination);
+            fs.mkdirSync(urlTodoDestination);
+            let filesTodo = crearArchivos(sourceFiles, sourceFiles);        
+            
+            filesCopy(filesTodo, urlTodoSource, urlTodoDestination);
+            //fs.mkdirSync(config.destination+'\\'+pedazos[0]);
+        }
+    });
+}
+console.log('config.source',config.source);
+console.log('config.destination',config.destination);
+
+var srcPath = config.source; //current folder
+var destPath = config.destination; //Any destination folder
+console.log('srcPath',srcPath);
+console.log('destPath',destPath);
+console.log('Copying files...');
+ncp(srcPath, destPath, function (err) {
+  if (err) {
+    return console.error(err);
+  }
+  console.log('Copying files complete.');
+});
+
+/*
+if(pedazos[1]){
+    fs.createReadStream(config.source+'\\'+element).pipe(fs.createWriteStream(config.destination+'\\'+element));
+    //console.log('archivo normal');
+}
+else{
+    //console.log('carpeta');
+    urlTodo = config.destination+'\\'+pedazos[0];
+    fs.mkdirSync(urlTodo);
+    //fs.mkdirSync(config.destination+'\\'+pedazos[0]);
+}
+/*
 fs.readdir(config.source, function (err, sourceFiles) {
     if (err) throw err;    
     fs.readdir(config.destination, function (err, destFiles) {
         if (err) throw err;    
-        var files = dups(sourceFiles, destFiles);
-        var filesTodo = crearArchivos(sourceFiles, destFiles);
-        let fileSi = filesTodo[0];
-        let filesNo = filesTodo[1];
-
+        let files = dups(sourceFiles, destFiles);
+        
+        let filesTodo = crearArchivos(sourceFiles, destFiles);
+        
+       // let fileSi = filesTodo[0];
+       // let filesNo = filesTodo[1];
+        
+        let urlTodo = '';
+        console.log('sourceFiles',sourceFiles);
+        console.log('destFiles',destFiles);
+        //process.exit()
+        filesCopy(filesTodo, config.source, config.destination);
+        /*
         filesNo.forEach(element => {
-            //console.log('element',element);
-            let pedazos = element.split('.') 
+            let pedazos = element.split('.');  
             if(pedazos[1]){
                 fs.createReadStream(config.source+'\\'+element).pipe(fs.createWriteStream(config.destination+'\\'+element));
                 //console.log('archivo normal');
             }
             else{
                 //console.log('carpeta');
-                fs.mkdirSync(config.destination+'\\'+pedazos[0]);
+                urlTodo = config.destination+'\\'+pedazos[0];
+                fs.mkdirSync(urlTodo);
+                //fs.mkdirSync(config.destination+'\\'+pedazos[0]);
             }
                         
         });
+        */
+        /*
         for (var i = 0; i < files.length; i++) {
             for (var j = 0; j < config.repatterns.length; j++) {
                 if (files[i].match(config.repatterns[j])) {
@@ -122,6 +189,8 @@ fs.readdir(config.source, function (err, sourceFiles) {
                     watchFile(sourceFile, destFile);
                 }
             }
-        }        
+        } 
+              
     });
 });
+*/

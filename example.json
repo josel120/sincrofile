@@ -1,6 +1,6 @@
 {
-  "source": "C:\\Users\\Peruapps\\Documents\\uno",
-  "destination": "C:\\Users\\Peruapps\\Documents\\dos",
+  "source": "C:\\Users\\Peruapps\\Documents\\sincrofile\\uno",
+  "destination": "C:\\Users\\Peruapps\\Documents\\sincrofile\\dos",
   "patterns": [
     ".dll$", 
     ".exe$", 
