@@ -23,7 +23,7 @@ console.log("Source:      " + config.source);
 console.log("Destination: " + config.destination);
 console.log("Patterns:    " + config.repatterns);
 console.log("------------------------------------------");
-
+/*
 function crearArchivos(a,b){
     var r = [];
     var debeCrear = [];
@@ -94,8 +94,7 @@ function watchFile(source, dest) {
     });
 }
 
-function filesCopy(filesTodo, urlTodoSource, urlTodoDestination){
-            
+function filesCopy(filesTodo, urlTodoSource, urlTodoDestination){            
     //let pedazos = filesTodo.split('.');
     let fileSi = filesTodo[0];
     let filesNo = filesTodo[1];
@@ -121,6 +120,7 @@ function filesCopy(filesTodo, urlTodoSource, urlTodoDestination){
         }
     });
 }
+*/
 console.log('config.source',config.source);
 console.log('config.destination',config.destination);
 
@@ -134,6 +134,7 @@ ncp(srcPath, destPath, function (err) {
     return console.error(err);
   }
   console.log('Copying files complete.');
+  process.exit();
 });
 
 /*
