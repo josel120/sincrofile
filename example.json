@@ -1,0 +1,10 @@
+{
+  "source": "C:\\Users\\Peruapps\\Documents\\uno",
+  "destination": "C:\\Users\\Peruapps\\Documents\\dos",
+  "patterns": [
+    ".dll$", 
+    ".exe$", 
+    ".pdb$",
+    ".txt$"
+  ] 
+}
